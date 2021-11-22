@@ -1,0 +1,16 @@
+doctype
+html
+    head 
+        title Login
+        link(href='style.css' rel= 'stylesheet')
+    body
+        div(id='top-menu') 
+        div(id='log-in-box')
+        
+            form(method='POST' action='http://localhost:3000/login')
+                p(id='title1') Log in to your account.
+                input(class='input' type='text' name='username' placeholder='Username' required)
+                br
+                input(class='input' type='password' name='password' placeholder='Password' required) 
+                br
+                input(class='input' type='submit' value='Log In')
