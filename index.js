@@ -67,7 +67,10 @@ app.get('/logout', (req, res) => {
     })
 })
 
-app.get('/create', routes.loadCreate)
+app.get('/', routes.main);
+app.get('/create', routes.loadCreate);
+app.get('/invalid', routes.Invalid);
 
-app.post('/create', urlencodedParser, routes.createAccount)
+app.post('/create', urlencodedParser, routes.createAccount);
+
 

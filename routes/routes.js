@@ -7,31 +7,64 @@ const url = 'mongodb+srv://Jinx:Pass@cluster0.7gqy5.mongodb.net/myFirstDatabase?
 
 const client = new MongoClient(url);
 
+exports.main = (req, res) => {
+    res.render('main', {
+        title: 'Main'
+    });
+}
+
 //function that will get the info from the form that the user submits and adds the data to the database
 //in the form of a person model
 exports.createAccount = (req, res) => {
-    await client.connect();
-    let salt = bcrypt.genSaltSync(10);
-    let hash = bcrypt.hashSync(req.body.password, salt);
-    //    username, password, email, age, and the answers to three multiple choice
-    let account = {
-        username: req.body.name,
-        password: hash,
-        email: req.body.email,
-        age: req.body.age,
-        q1: req.body.q1,
-        q2: req.body.q2,
-        q3: req.body.q3,
-    };
-    const insertResult = await collection.insertOne(account);
-    client.close();
-    res.redirect('/');
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    const age = req.body.age;
+    const q1 = req.body.q1;
+    const q2 = req.body.q2;
+    const q3 = req.body.q3;
+
+    if(username == null || password == null || email == null || age == null || q1 == null || q2 == null || q3 == null){
+        res.redirect('/invalid');
+    }else{
+        await client.connect();
+
+        const id = await dataCollection.countDocuments() + 1;
+        const query = dataCollection.findOne({ "Username" : username });
+        if(query != null) {
+            console.log('username already exists');
+            res.redirect('/invalid');
+        }else{
+            let salt = bcrypt.genSaltSync(10);
+            let hash = bcrypt.hashSync(password, salt);
+            //    username, password, email, age, and the answers to three multiple choice
+            let account = {
+                username: username,
+                password: hash,
+                email: email,
+                age: age,
+                q1: q1,
+                q2: q2,
+                q3: q3,
+            };
+            const insertResult = await collection.insertOne(account);
+            client.close();
+            res.redirect('/');
+        }
+    }
 }
 
+exports.Invalid = (req, res) => {
+    res.render('invalid', {
+        title: 'Add Account'
+    });
+}
 
 //function used to load the create screen
 exports.loadCreate = (req, res) => {
-
+    res.render('createAc', {
+        title: 'Add Account'
+    });
 }
 
 exports.add = async (req, res) => {
