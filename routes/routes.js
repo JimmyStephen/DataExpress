@@ -15,7 +15,7 @@ exports.main = (req, res) => {
 
 //function that will get the info from the form that the user submits and adds the data to the database
 //in the form of a person model
-exports.createAccount = (req, res) => {
+exports.createAccount = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
