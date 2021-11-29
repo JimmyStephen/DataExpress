@@ -6,6 +6,10 @@ const bcrypt = require('bcryptjs');
 const url = 'mongodb+srv://Jinx:Pass@cluster0.7gqy5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 const client = new MongoClient(url);
+const dbName = 'myData';
+const db = client.db(dbName);
+const dataCollection = db.collection('Accounts');
+
 
 exports.main = (req, res) => {
     res.render('main', {
@@ -30,8 +34,8 @@ exports.createAccount = async (req, res) => {
         await client.connect();
 
         const id = await dataCollection.countDocuments() + 1;
-        const query = dataCollection.findOne({ "Username": username });
-        if (query != null) {
+        const query = dataCollection.findOne({ "username": username });
+        if (query == null) {
             console.log('username already exists');
             res.redirect('/invalid');
         } else {
@@ -47,7 +51,7 @@ exports.createAccount = async (req, res) => {
                 q2: q2,
                 q3: q3,
             };
-            const insertResult = await collection.insertOne(account);
+            const insertResult = await dataCollection.insertOne(account);
             client.close();
             res.redirect('/');
         }
