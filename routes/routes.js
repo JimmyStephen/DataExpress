@@ -17,10 +17,12 @@ exports.main = (req, res) => {
         title: 'Main'
     });
 }
-exports.welcome = (req, res) => {
+exports.welcome = (req, res, next) => {
     res.render('welcome', {
-        title: `Welcome`
+        title: `Welcome`,
+        lastEntry: `${req.cookies.LastVisit}`
     })
+    next();
 }
 //function that will get the info from the form that the user submits and adds the data to the database
 //in the form of a person model

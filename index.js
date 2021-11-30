@@ -46,14 +46,15 @@ app.get('/logout', (req, res) => {
 const checkAuth = (req, res, next) => {
     if (req.session.user && req.session.user.isAuthenticated) {
         console.log("Everything is authenticated")
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date + ' ' + time;
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let dateTime = date + ' ' + time;
         // first parameter is the alias for the variable and value you're passing in.
         // second parameter is the varibale that holds a value.
         // last parameter is an object for the maxAge of the cookie
         res.cookie('LastVisit', dateTime, { maxAge: 99999999999999999999999 });
+        res.cookie()
         next();
     } else {
         res.redirect('/');
