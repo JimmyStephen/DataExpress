@@ -1,0 +1,7 @@
+extends layout
+block content
+    body
+        h1=title
+        h2=lastEntry
+    form(action="/logout", method="get") 
+        input(type="submit", value="Logout")

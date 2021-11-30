@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
+html{
+    font-family: 'Mochiy Pop One', sans-serif;
+    font-size: medium;
+    background: url("gold.png") no-repeat center center fixed;
+    background-color: aqua;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+h1{
+    text-align: center;
+}
+
+form{
+    display: block;
+    margin: 15% auto;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+#noac{
+    display: block;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+#btn{
+    font-size: 18px;
+    padding: 5px;
+    background-color: rgb(193, 159, 236);
+    border-radius: 12px;
+}

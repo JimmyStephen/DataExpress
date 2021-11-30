@@ -1,10 +1,5 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
+extends layout
+block content
     body 
         div(class='registration-box center')
             form(id='regForm' class='registration-form' name='registration-form' action='/create' method='post')
@@ -42,4 +37,4 @@ html(lang="en")
                     option(value='Nigeria') Nigeria
                     option(value='Nitrogen') Nitrogen
                 br
-                input(class='input' type='submit' value='submit')
+                input(class='input' type='submit' value='submit' id="btn")
