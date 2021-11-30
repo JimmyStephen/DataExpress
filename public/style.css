@@ -9,6 +9,9 @@ html{
     -o-background-size: cover;
     background-size: cover;
 }
+h1{
+    text-align: center;
+}
 
 form{
     display: block;
@@ -24,4 +27,11 @@ form{
     text-align: center;
     cursor: pointer;
     user-select: none;
+}
+
+#btn{
+    font-size: 18px;
+    padding: 5px;
+    background-color: rgb(193, 159, 236);
+    border-radius: 12px;
 }
