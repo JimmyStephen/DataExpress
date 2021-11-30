@@ -2,6 +2,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const { render } = require('pug');
 const bcrypt = require('bcryptjs');
 
+
 //get new database
 const url = 'mongodb+srv://Jinx:Pass@cluster0.7gqy5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
@@ -16,7 +17,11 @@ exports.main = (req, res) => {
         title: 'Main'
     });
 }
-
+exports.welcome = (req, res) => {
+    res.render('welcome', {
+        title: `Welcome`
+    })
+}
 //function that will get the info from the form that the user submits and adds the data to the database
 //in the form of a person model
 exports.createAccount = async (req, res) => {
@@ -32,9 +37,7 @@ exports.createAccount = async (req, res) => {
         res.redirect('/invalid');
     } else {
         await client.connect();
-
-        const id = await dataCollection.countDocuments() + 1;
-        const query = dataCollection.findOne({ "username": username });
+        const query = await dataCollection.findOne({ "username": username });
         if (query == null) {
             console.log('username already exists');
             res.redirect('/invalid');
@@ -51,7 +54,8 @@ exports.createAccount = async (req, res) => {
                 q2: q2,
                 q3: q3,
             };
-            const insertResult = await dataCollection.insertOne(account);
+            let result = await dataCollection.insertOne(account);
+            console.log(result)
             client.close();
             res.redirect('/');
         }
@@ -63,7 +67,11 @@ exports.Invalid = (req, res) => {
         title: 'Add Account'
     });
 }
-
+exports.login = (req, res) => {
+    res.render('login', {
+        title: 'Login'
+    });
+}
 //function used to load the create screen
 exports.loadCreate = (req, res) => {
     res.render('createAc', {
@@ -104,4 +112,41 @@ exports.add = async (req, res) => {
             }
         }
     }
+}
+
+exports.loginAccount = async (req, res, next) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (username == null || password == null) {
+        res.redirect('/invalid');
+    } else {
+        await client.connect();
+        let query = await dataCollection.findOne({ "username": username });
+        if (query == null) {
+            console.log('username does not exist exists');
+            res.redirect('/invalid');
+        } else {
+            console.log(query.password)
+            console.log(`sync : ${password}`, bcrypt.compareSync(password, query.password))
+            if (!bcrypt.compareSync(password, query.password)) {
+                res.redirect('/invalid');
+            } else {
+                console.log("Made it to next function")
+                next();
+
+
+                // res.redirect('/welcome')
+                // console.log('it continues after rendering page')
+                // req.session.user = {
+                //     isAuthenticated: true,
+                //     username: req.body.username
+                // }
+
+            }
+        }
+    }
+    // res.render('welcome', {
+    //     title: `welcome ${username}, it is ${Date.now}`
+    // })
 }
