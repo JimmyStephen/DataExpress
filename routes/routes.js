@@ -136,11 +136,43 @@ exports.loginAccount = async (req, res, next) => {
             } else {
                 console.log("Made it to next function")
                 next();
-
-
-
             }
         }
     }
 
+}
+
+exports.edit = async(req, res) => {
+    await client.connect();
+    const filteredDocs = await collection.find(ObjectId(req.params.id)).toArray();
+    client.close();
+    res.render('edit', {
+        title: 'Edit Person',
+        person: filteredDocs[0]
+    })
+}
+
+exports.editPerson = async(req, res) => {
+    await client.connect();
+    const updateResult = await collection.updateOne(
+        {_id: ObjectId(req.params.id)},
+        {$set: {
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            age: req.body.age,
+            q1: req.body.q1,
+            q2: req.body.q2,
+            q3: req.body.q3
+        }}
+    );
+    client.close();
+    res.redirect('/');
+}
+
+exports.delete = async(req, res) => {
+    await client.connect();
+    const deleteResult = await collection.deleteOne({_id: ObjectId(req.params.id)});
+    client.close();
+    res.redirect('/');
 }

@@ -1,0 +1,32 @@
+
+extends layout 
+
+block content 
+    Table(class='gridtable')
+        tr
+            th
+            th Username 
+            th Password
+            th Email
+            th Age
+            th Q1 
+            th Q2
+            th Q3
+            th Edit
+            th Delete
+        each item in accounts 
+            tr 
+                td #{item._id}
+                td #{item.username} 
+                td #{item.password} 
+                td #{item.email}  
+                td #{item.age}  
+                td #{item.q1}  
+                td #{item.q2}  
+                td #{item.q3}  
+                td
+                    a(href='/edit/' + item._id) Edit
+                td
+                    a(href='/delete/' + item._id) Delete
+    p
+        a(href='/create') Add New Person
