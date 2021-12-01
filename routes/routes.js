@@ -40,7 +40,7 @@ exports.createAccount = async (req, res) => {
     } else {
         await client.connect();
         const query = await dataCollection.findOne({ "username": username });
-        if (query == null) {
+        if (query != null) {
             console.log('username already exists');
             res.redirect('/invalid');
         } else {
@@ -138,17 +138,9 @@ exports.loginAccount = async (req, res, next) => {
                 next();
 
 
-                // res.redirect('/welcome')
-                // console.log('it continues after rendering page')
-                // req.session.user = {
-                //     isAuthenticated: true,
-                //     username: req.body.username
-                // }
 
             }
         }
     }
-    // res.render('welcome', {
-    //     title: `welcome ${username}, it is ${Date.now}`
-    // })
+
 }

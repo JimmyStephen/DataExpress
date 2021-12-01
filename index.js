@@ -2,6 +2,7 @@ const express = require('express'),
     pug = require('pug'),
     path = require('path'),
     routes = require('./routes/routes.js');
+exports.lastEntry = '';
 const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser("whatever"));
@@ -39,23 +40,42 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.log(err)
         } else {
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            let dateTime = date + ' ' + time;
+            this.lastEntry = dateTime;
             res.redirect('/')
         }
     })
 })
 const checkAuth = (req, res, next) => {
     if (req.session.user && req.session.user.isAuthenticated) {
-        console.log("Everything is authenticated")
-        let today = new Date();
-        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        let dateTime = date + ' ' + time;
-        // first parameter is the alias for the variable and value you're passing in.
-        // second parameter is the varibale that holds a value.
-        // last parameter is an object for the maxAge of the cookie
-        res.cookie('LastVisit', dateTime, { maxAge: 99999999999999999999999 });
-        res.cookie()
-        next();
+        if (this.lastEntry == '') {
+            console.log("Everything is authenticated")
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            let dateTime = date + ' ' + time;
+            this.lastEntry = dateTime;
+            // first parameter is the alias for the variable and value you're passing in.
+            // second parameter is the varibale that holds a value.
+            // last parameter is an object for the maxAge of the cookie
+            res.cookie('LastVisit', "Hello, this is your first time here", { maxAge: 99999999999999999999999 });
+            res.cookie()
+            next();
+        } else {
+            res.cookie('LastVisit', "Your last time here was " + this.lastEntry, { maxAge: 99999999999999999999999 })
+            console.log('Create Cookie first')
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            let dateTime = date + ' ' + time;
+            this.lastEntry = dateTime;
+            console.log('create date first')
+            next();
+
+        }
     } else {
         res.redirect('/');
     }
