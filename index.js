@@ -88,6 +88,10 @@ app.get('/create', routes.loadCreate);
 app.get('/invalid', routes.Invalid);
 app.get('/login', routes.login);
 app.get('/welcome', checkAuth, routes.welcome);
+app.get('/view', routes.showDB);
+app.get('/edit/:id', routes.edit);
+app.get('/delete/:id', routes.delete);
+app.post('/edit/:id', urlencodedParser, routes.editPerson);
 app.post('/create', urlencodedParser, routes.createAccount);
 app.post('/login', urlencodedParser, routes.loginAccount, (req, res) => {
     req.session.user = {

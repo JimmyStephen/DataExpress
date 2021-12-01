@@ -142,19 +142,26 @@ exports.loginAccount = async (req, res, next) => {
 
 }
 
+exports.showDB = async(req, res) => {
+    await client.connect();
+    const findResult = await dataCollection.find({}).toArray();
+    console.log('Results Found: ', findResult);
+    client.close();
+    res.render('viewDB', {
+        people: findResult
+    });
+}
 exports.edit = async(req, res) => {
     await client.connect();
-    const filteredDocs = await collection.find(ObjectId(req.params.id)).toArray();
+    const filteredDocs = await dataCollection.find(ObjectId(req.params.id)).toArray();
     client.close();
-    res.render('edit', {
-        title: 'Edit Person',
-        person: filteredDocs[0]
-    })
+    console.log('Got Account');
+    res.render('edit')
 }
 
 exports.editPerson = async(req, res) => {
     await client.connect();
-    const updateResult = await collection.updateOne(
+    const updateResult = await dataCollection.updateOne(
         {_id: ObjectId(req.params.id)},
         {$set: {
             username: req.body.username,
@@ -172,7 +179,7 @@ exports.editPerson = async(req, res) => {
 
 exports.delete = async(req, res) => {
     await client.connect();
-    const deleteResult = await collection.deleteOne({_id: ObjectId(req.params.id)});
+    const deleteResult = await dataCollection.deleteOne({_id: ObjectId(req.params.id)});
     client.close();
     res.redirect('/');
 }

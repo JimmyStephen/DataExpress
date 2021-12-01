@@ -1,8 +1,9 @@
 extends layout
+
 block content
     body 
         div(class='registration-box center')
-            form(id='regForm' class='registration-form' name='registration-form' action='/create' method='post')
+            form(id='regForm' class='registration-form' name='registration-form' action='/edit/' method='post')
                 input(class='input' type='text' name='username' id='username' placeholder='Username' required)
                 br
                 input(class='input' type='text' name='password' id='password' placeholder='Password' required)
