@@ -142,7 +142,7 @@ exports.loginAccount = async (req, res, next) => {
 
 }
 
-exports.showDB = async(req, res) => {
+exports.showDB = async (req, res) => {
     await client.connect();
     const findResult = await dataCollection.find({}).toArray();
     console.log('Results Found: ', findResult);
@@ -151,35 +151,77 @@ exports.showDB = async(req, res) => {
         people: findResult
     });
 }
-exports.edit = async(req, res) => {
+exports.edit = async (req, res) => {
     await client.connect();
     const filteredDocs = await dataCollection.find(ObjectId(req.params.id)).toArray();
     client.close();
     console.log('Got Account');
-    res.render('edit')
+    res.render('edit', {
+        accounts: filteredDocs
+    })
 }
-
-exports.editPerson = async(req, res) => {
+exports.allData = async (req, res) => {
+    client.connect();
+    let findResult = await collection.find({}).toArray();
+    res.json(findResult);
+}
+exports.editPerson = async (req, res) => {
     await client.connect();
+    const currentAccount = await dataCollection.findOne({ username: req.body.currentUsername });
+
+    const newAccount = {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        age: req.body.age,
+        q1: req.body.q1,
+        q2: req.body.q2,
+        q3: req.body.q3
+    }
+    if (newAccount.email == null) {
+        newAccount.email = currentAccount.email;
+    }
+    if (newAccount.username == null) {
+        newAccount.username = currentAccount.username;
+    }
+    if (newAccount.age != null) {
+        newAccount.age = currentAccount.age;
+    }
+    if (bcrypt.compareSync(currentAccount.password, newAccount.password)) {
+        newAccount.password = currentAccount.password;
+    } else {
+        let salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(newAccount.password, salt);
+        newAccount.password = hash;
+    }
+
+
+    console.log("This is the current account: \n" + currentAccount.username + ", " + currentAccount.email + ", " + currentAccount.age + ", " + currentAccount.password);
+    console.log("This is the newAccount account: \n" + newAccount.username + ", " + newAccount.email + ", " + newAccount.age + ", " + newAccount.password);
+
+
+
     const updateResult = await dataCollection.updateOne(
-        {_id: ObjectId(req.params.id)},
-        {$set: {
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            age: req.body.age,
-            q1: req.body.q1,
-            q2: req.body.q2,
-            q3: req.body.q3
-        }}
+        { username: req.body.currentUsername },
+        {
+            $set: {
+                username: newAccount.username,
+                password: newAccount.password,
+                email: newAccount.email,
+                age: newAccount.age,
+                q1: newAccount.q1,
+                q2: newAccount.q2,
+                q3: newAccount.q3
+            }
+        }
     );
     client.close();
     res.redirect('/');
 }
 
-exports.delete = async(req, res) => {
+exports.delete = async (req, res) => {
     await client.connect();
-    const deleteResult = await dataCollection.deleteOne({_id: ObjectId(req.params.id)});
+    const deleteResult = await dataCollection.deleteOne({ _id: ObjectId(req.params.id) });
     client.close();
     res.redirect('/');
 }
