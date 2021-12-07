@@ -3,7 +3,10 @@ extends layout
 block content
     body 
         div(class='registration-box center')
-            form(id='regForm' class='registration-form' name='registration-form' action='/edit/' method='post')
+            form(id='regForm' class='registration-form' name='registration-form' action='/edit' method='post')
+                p Please Enter Your current username:
+                input(class='input' type='text' name='currentUsername' id='currentUsername' placeholder='Current Username' required)
+                br
                 input(class='input' type='text' name='username' id='username' placeholder='Username' required)
                 br
                 input(class='input' type='text' name='password' id='password' placeholder='Password' required)
@@ -17,9 +20,9 @@ block content
                 label(for='Question1') Do you like me?: 
                 select(name='q1')
                     option(value='yes') yes
-                    option(value='A2') yes!
-                    option(value='A3') Yes?!
-                    option(value='A4') yes.
+                    option(value='yes!') yes!
+                    option(value='Yes?!') Yes?!
+                    option(value='yes.') yes.
                 br
                 
                 //question 2
@@ -31,7 +34,7 @@ block content
                     option(value='Mosquitoes') Mosquitoes
                 br
                 
-                label(for='Question3') Favorite N Word: 
+                label(for='Question3') Favorite Word: 
                 select(name='q3')
                     option(value='Neumont') Neumont
                     option(value='No') No
