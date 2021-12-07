@@ -89,9 +89,9 @@ app.get('/invalid', routes.Invalid);
 app.get('/login', routes.login);
 app.get('/welcome', checkAuth, routes.welcome);
 app.get('/view', routes.showDB);
-app.get('/edit/:id', routes.edit);
+app.get('/edit', routes.edit);
 app.get('/delete/:id', routes.delete);
-app.post('/edit/:id', urlencodedParser, routes.editPerson);
+app.post('/edit', urlencodedParser, routes.editPerson);
 app.post('/create', urlencodedParser, routes.createAccount);
 app.post('/login', urlencodedParser, routes.loginAccount, (req, res) => {
     req.session.user = {
@@ -101,6 +101,7 @@ app.post('/login', urlencodedParser, routes.loginAccount, (req, res) => {
     console.log("Created Session")
     res.redirect('/welcome')
 });
+app.get('/getData', routes.allData)
 
 
 app.listen(3000);
