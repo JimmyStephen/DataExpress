@@ -184,7 +184,7 @@ exports.editPerson = async (req, res) => {
     if (newAccount.username == null) {
         newAccount.username = currentAccount.username;
     }
-    if (newAccount.age != null) {
+    if (newAccount.age == null) {
         newAccount.age = currentAccount.age;
     }
     if (bcrypt.compareSync(currentAccount.password, newAccount.password)) {
