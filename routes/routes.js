@@ -153,11 +153,11 @@ exports.showDB = async (req, res) => {
 }
 exports.edit = async (req, res) => {
     await client.connect();
-    const filteredDocs = await dataCollection.find(ObjectId(req.params.id)).toArray();
+    const filteredDocs = await dataCollection.find({}).toArray();
     client.close();
     console.log('Got Account');
     res.render('edit', {
-        accounts: filteredDocs
+        people: filteredDocs
     })
 }
 exports.allData = async (req, res) => {
