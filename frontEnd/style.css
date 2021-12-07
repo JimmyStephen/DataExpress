@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
 html{
-    background-color: aqua;
+    background: url('brick.png') no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     font-size: medium;
     font-family: 'Mochiy Pop One', sans-serif;
 
