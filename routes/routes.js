@@ -64,6 +64,38 @@ exports.createAccount = async (req, res) => {
         }
     }
 }
+//check admin credentials before login
+exports.loginAdmin = async (req, res, next) => {
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if (username == null || password == null) {
+        res.redirect('/invalid');
+    } else {
+        await client.connect();
+        let query = await dataCollection.findOne({ "username": username });
+        if (query == null) {
+            console.log('username does not exist exists');
+            res.redirect('/invalid');
+        } else {
+            console.log(username)
+            console.log(password)
+            console.log(query.password)
+            console.log(`sync : ${password}`, bcrypt.compareSync(password, query.password))
+            if (bcrypt.compareSync(password, query.password)) {
+                res.redirect('/invalid');
+            } else {
+                if (!query.isAdmin) {
+                    res.redirect('/invalid')
+                } else {
+                    console.log("Made it to next function")
+                    next();
+                }
+            }
+        }
+    }
+
+}
 
 exports.Invalid = (req, res) => {
     res.render('invalid', {
@@ -73,6 +105,36 @@ exports.Invalid = (req, res) => {
 exports.login = (req, res) => {
     res.render('login', {
         title: 'Login'
+    });
+}
+exports.adminAuth = async (req, res) => {
+    await client.connect();
+    const findResult = await dataCollection.find({}).toArray();
+    console.log('Results Found: ', findResult);
+    client.close();
+    res.render('createAdmin', {
+        people: findResult
+    });
+}
+//loads admin page
+exports.Adminlogin = async (req, res) => {
+    await client.connect();
+    // let salt = bcrypt.genSaltSync(10);
+    // let hash = bcrypt.hashSync("password", salt);
+    // const newAccount = {
+    //     username: "Admin",
+    //     password: hash,
+    //     email: "testAdmin",
+    //     age: 16,
+    //     q1: "yes.",
+    //     q2: "Leaches",
+    //     q3: "Lemons",
+    //     isAdmin: true
+    // }
+
+    // let result = await dataCollection.insertOne(newAccount)
+    res.render('adminLogin', {
+        title: 'Admin Login'
     });
 }
 //function used to load the create screen
@@ -169,6 +231,22 @@ exports.allData = async (req, res) => {
     console.log("Find result: " + findResult)
     res.json(findResult);
 }
+
+exports.createAdmin = async (req, res) => {
+    const userAccount = await dataCollection.findOne({ username: req.params.userUsername });
+    if (userAccount == null) {
+        res.redirect('Invalid')
+    } else {
+        const updateResult = await dataCollection.updateOne(
+            { username: req.params.userUsername },
+            {
+                $set: {
+                    isAdmin: true
+                }
+            }
+        );
+    }
+}
 exports.editPerson = async (req, res) => {
     await client.connect();
     const currentAccount = await dataCollection.findOne({ username: req.body.currentUsername });
@@ -220,13 +298,6 @@ exports.editPerson = async (req, res) => {
             }
         }
     );
-    client.close();
-    res.redirect('/');
-}
-
-exports.delete = async (req, res) => {
-    await client.connect();
-    const deleteResult = await dataCollection.deleteOne({ _id: ObjectId(req.params.id) });
     client.close();
     res.redirect('/');
 }

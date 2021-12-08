@@ -41,14 +41,13 @@ let getData = async () => {
                         break;
                 }
                 switch (element.q3) {
-                    case "Under the bed":
-                        console.log("match under the bed")
+                    case "Oranges":
                         Q3A1++;
                         break;
-                    case "In a cave":
+                    case "Apples":
                         Q3A2++;
                         break;
-                    case "Nigeria":
+                    case "Lemons":
                         Q3A3++;
                     default:
                         break;
@@ -73,8 +72,13 @@ let makeGraph = () => {
     const ctx = canvas.getContext('2d');
 
     //changing size
+<<<<<<< HEAD
+    canvas.width = 450;
+    canvas.height = 150;
+=======
     canvas.width = 600;
     canvas.height = 160;
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
     drawText = () => {
         //setting text color
         ctx.fillStyle = '#FFF';
@@ -93,10 +97,17 @@ let makeGraph = () => {
         ctx.fillText('Mosquitoes', 250, 155);
         ctx.fillText(`What is your favorite insect`, 160, 10);
         //question3
+<<<<<<< HEAD
+        ctx.fillText('Oranges', 300, 150);
+        ctx.fillText('Apples', 350, 150);
+        ctx.fillText('Lemons', 400, 150);
+        ctx.fillText(`The better fruit`, 350, 10);
+=======
         ctx.fillText('Under bed', 300, 150);
         ctx.fillText('In a cave', 350, 155);
         ctx.fillText('Nigeria', 400, 150);
         ctx.fillText(`your second grandmas best friends mom birth place?`, 310, 10);
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
     }
 
     drawGraph = (Q1A1, Q1A2, Q1A3, Q2A1, Q2A2, Q2A3, Q3A1, Q3A2, Q3A3) => {
