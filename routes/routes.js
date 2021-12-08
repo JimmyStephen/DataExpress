@@ -55,6 +55,7 @@ exports.createAccount = async (req, res) => {
                 q1: q1,
                 q2: q2,
                 q3: q3,
+                isAdmin: false
             };
             let result = await dataCollection.insertOne(account);
             console.log(result)
