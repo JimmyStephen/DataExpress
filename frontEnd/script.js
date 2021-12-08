@@ -72,8 +72,13 @@ let makeGraph = () => {
     const ctx = canvas.getContext('2d');
 
     //changing size
+<<<<<<< HEAD
     canvas.width = 450;
     canvas.height = 150;
+=======
+    canvas.width = 600;
+    canvas.height = 160;
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
     drawText = () => {
         //setting text color
         ctx.fillStyle = '#FFF';
@@ -82,20 +87,27 @@ let makeGraph = () => {
         //setting the text and start location
         //(text, start x, start y)
         //question 1
-        ctx.fillText('yes.', 0, 150);
-        ctx.fillText('yes!', 50, 150);
-        ctx.fillText('Yes?!', 100, 150);
-        ctx.fillText(`Do you like me?`, 50, 10);
+        ctx.fillText('yes.', 10, 155);
+        ctx.fillText('yes!', 60, 155);
+        ctx.fillText('Yes?!', 110, 155);
+        ctx.fillText(`Do you like me?`, 35, 10);
         //question 2
-        ctx.fillText('Leaches', 150, 150);
-        ctx.fillText('Wasps', 200, 150);
-        ctx.fillText('Mosquitoes', 250, 150);
-        ctx.fillText(`What is your favorite insect`, 200, 10);
+        ctx.fillText('Leaches', 150, 155);
+        ctx.fillText('Wasps', 200, 155);
+        ctx.fillText('Mosquitoes', 250, 155);
+        ctx.fillText(`What is your favorite insect`, 160, 10);
         //question3
+<<<<<<< HEAD
         ctx.fillText('Oranges', 300, 150);
         ctx.fillText('Apples', 350, 150);
         ctx.fillText('Lemons', 400, 150);
         ctx.fillText(`The better fruit`, 350, 10);
+=======
+        ctx.fillText('Under bed', 300, 150);
+        ctx.fillText('In a cave', 350, 155);
+        ctx.fillText('Nigeria', 400, 150);
+        ctx.fillText(`your second grandmas best friends mom birth place?`, 310, 10);
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
     }
 
     drawGraph = (Q1A1, Q1A2, Q1A3, Q2A1, Q2A2, Q2A3, Q3A1, Q3A2, Q3A3) => {
@@ -142,7 +154,7 @@ let makeGraph = () => {
         //a3
         ctx.fillRect(110, (1 - Q1A3Percent) * canvas.height, 20, 150);
 
-        ctx.fillRect(142, 0, 5, 150);
+        ctx.fillRect(142, 0, 5, 160);
 
         //draw rectangles Q2
         //a1
@@ -152,7 +164,7 @@ let makeGraph = () => {
         //a3
         ctx.fillRect(260, (1 - Q2A3Percent) * canvas.height, 20, 150);
 
-        ctx.fillRect(292, 0, 5, 150);
+        ctx.fillRect(292, 0, 5, 160);
 
         //draw rectangles Q3
         //a1

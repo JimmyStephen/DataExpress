@@ -14,11 +14,16 @@ html{
     padding: 5px;
     background-color: rgb(193, 159, 236);
     border-radius: 12px;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
 }
 
 form{
     display: block;
+<<<<<<< HEAD
     margin: 10% auto;
     text-align: center;
     align-self: center;
@@ -26,3 +31,11 @@ form{
     user-select: none;
     position: auto;
 }
+=======
+    margin: 35% auto;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    position: auto;
+}
+>>>>>>> 798aa42e1fa64d084b8523b417446322fb67cdfd
