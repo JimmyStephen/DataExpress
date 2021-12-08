@@ -87,10 +87,21 @@ app.get('/', routes.main);
 app.get('/create', routes.loadCreate);
 app.get('/invalid', routes.Invalid);
 app.get('/login', routes.login);
+app.get('/adminLogin', urlencodedParser, routes.Adminlogin);
 app.get('/welcome', checkAuth, routes.welcome);
+app.get('/createAdmin', checkAuth, routes.createAdmin);
+app.get('/adminAuth', routes.adminAuth)
 app.get('/view', routes.showDB);
 app.get('/edit', routes.edit);
-app.get('/delete/:id', routes.delete);
+app.post("/LoginAdmin", urlencodedParser, routes.loginAdmin, (req, res) => {
+    req.session.user = {
+        isAuthenticated: true,
+        username: req.body.username
+    }
+    console.log("Created Session")
+    res.redirect('/adminAuth')
+});
+app.get('/edit/:userUsername')
 app.post('/edit', urlencodedParser, routes.editPerson);
 app.post('/create', urlencodedParser, routes.createAccount);
 app.post('/login', urlencodedParser, routes.loginAccount, (req, res) => {

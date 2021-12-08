@@ -9,3 +9,20 @@ html{
     font-family: 'Mochiy Pop One', sans-serif;
 
 }
+#btn{
+    font-size: 18px;
+    padding: 5px;
+    background-color: rgb(193, 159, 236);
+    border-radius: 12px;
+
+}
+
+form{
+    display: block;
+    margin: 10% auto;
+    text-align: center;
+    align-self: center;
+    cursor: pointer;
+    user-select: none;
+    position: auto;
+}
