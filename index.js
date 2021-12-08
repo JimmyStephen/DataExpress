@@ -11,11 +11,11 @@ const { urlencoded } = require('express');
 app.set('view engine', "pug")
 app.set('views', __dirname + '/views')
 app.use(express.static(path.join(__dirname + '/public')));
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*')
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept')
-//     next();
-// });
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept')
+    next();
+});
 app.use(expressSession({
     secret: 'wh4t3v3r',
     saveUninitialized: true,

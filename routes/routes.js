@@ -161,8 +161,11 @@ exports.edit = async (req, res) => {
     })
 }
 exports.allData = async (req, res) => {
-    client.connect();
-    let findResult = await collection.find({}).toArray();
+    console.log("client is trying to connect")
+    await client.connect();
+    console.log("makes it to all data function and client connects ")
+    let findResult = await dataCollection.find({}).toArray();
+    console.log("Find result: " + findResult)
     res.json(findResult);
 }
 exports.editPerson = async (req, res) => {
@@ -176,7 +179,8 @@ exports.editPerson = async (req, res) => {
         age: req.body.age,
         q1: req.body.q1,
         q2: req.body.q2,
-        q3: req.body.q3
+        q3: req.body.q3,
+        isAdmin: false
     }
     if (newAccount.email == null) {
         newAccount.email = currentAccount.email;
